@@ -18,7 +18,9 @@ const BoardWidget: FC<IBoardWidgetProps> = ({className, ...props}) => {
 			{board.map(cell => (
 				<CellComponent onClick={handleCellClick} cell={cell} key={cell.id}/>
 			))}
+
 		</div>
+
 	);
 };
 

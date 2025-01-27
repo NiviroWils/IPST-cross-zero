@@ -9,7 +9,8 @@ const DEFAULT_VALUES: IGameContext = {
   currentPlayer: 'X',
   setCurrentPlayer: () => {},
   winner: null,
-  setWinner: () => {}
+  setWinner: () => {},
+  resetGame: () => {},
 }
 
 const GameContext = createContext<IGameContext>(DEFAULT_VALUES)

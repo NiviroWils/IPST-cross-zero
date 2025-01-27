@@ -9,16 +9,16 @@ const useBoardUseCase = () => {
 	 * Проверка победителя
 	 */
 	const checkWinner = (): IWinner => {
+		// Я решила вынести индексы ячеек с победными комбинациями в массив, самый простой (хотя, думаю, не единственный) способ решения
 		const winningCombinations = [
-			// Я решила вынести индексы ячеек с победными комбинациями в отдельный массив, самый простой (хотя, думаю, не единственный способ решения)
-			[0, 1, 2], // Верхняя строка
-			[3, 4, 5], // Средняя строка
-			[6, 7, 8], // Нижняя строка
-			[0, 3, 6], // Первый столбец
-			[1, 4, 7], // Второй столбец
-			[2, 5, 8], // Третий столбец
-			[0, 4, 8], // Диагональ сверху вниз
-			[2, 4, 6], // Диагональ снизу вверх
+			[0, 1, 2],
+			[3, 4, 5],
+			[6, 7, 8],
+			[0, 3, 6],
+			[1, 4, 7],
+			[2, 5, 8],
+			[0, 4, 8],
+			[2, 4, 6],
 		];
 
 		for (const combination of winningCombinations) {
@@ -28,17 +28,31 @@ const useBoardUseCase = () => {
 				board[a].player === board[b].player &&
 				board[a].player === board[c].player
 			) {
-				return board[a].player; // Возвращаем победителя ('X' или 'O')
+				return board[a].player;
 			}
 		}
 
-		return null; // Победителя нет
+		return null;
 	};
 
-	//Нужно проверять победителя при каждом изменении доски
+	/**
+	 * Проверка на ничью
+	 */
+	const checkDraw = (): boolean => {
+		return board.every(cell => cell.player !== null);
+	};
+
 	useEffect(() => {
-		setWinner(checkWinner());
-	}, [board]);
+		const winner = checkWinner();
+		if (winner) {
+			setWinner(winner);
+		} else if (checkDraw()) {
+			console.log("Игра окончена! Ничья");
+		} else {
+			setWinner(null);
+		}
+	}, [board, setWinner]);
+
 };
 
 export { useBoardUseCase };

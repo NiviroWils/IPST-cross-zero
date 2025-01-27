@@ -9,11 +9,19 @@ const useCellUseCase = () => {
 	 * Обработка клика по ячейке
 	 */
 	const handleCellClick = (cell: ICell): void => {
+		// Проверяем, если игра уже завершена
 		if (winner) {
 			console.log("Игра окончена! Победитель: " + winner);
 			return;
 		}
 
+		// Проверяем на ничью (если доска заполнена и нет победителя)
+		if (board.every(cell => cell.player !== null) && !winner) {
+			console.log("Игра окончена! Ничья");
+			return;
+		}
+
+		//Проверка клекти на занятость
 		if (cell.player !== null) {
 			console.log("Клетка уже занята!");
 			return;
